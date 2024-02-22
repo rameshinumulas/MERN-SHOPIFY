@@ -1,7 +1,12 @@
 const express = require('express');
+require('dotenv').config();
 const mongoose = require('mongoose');
+const mongoString = process.env.DATABASE_URL
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const routes = require('./routes/routes');
+const saltRounds = 10;
 
 const app = express();
 const PORT = 5000;
@@ -9,24 +14,20 @@ const PORT = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// IMPORT ROUTES
+app.use('/api', routes);
+
 // MONGODB_CONNECTION
-const mongodb_uri = 'mongodb://localhost:27017/mern_project';
+mongoose.connect(mongoString);
+const database = mongoose.connection;
 
-mongoose.connect(mongodb_uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
+database.on('error', (error) => {
+    console.log(error)
+})
 
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-    console.log('MongoDB connection successful');
-});
-
-// DEFINE ROUTES
-app.get('/login', (req, res) => {
-    res.send('Hello from the MERN stack');
-});
+database.once('connected', () => {
+    console.log('Database Connected');
+})
 
 // START SERVER
 app.listen(PORT, () => {
