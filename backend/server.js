@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 const mongoString = process.env.DATABASE_URL
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
 const routes = require('./routes/routes');
-const saltRounds = 10;
 
 const app = express();
 const PORT = 5000;
