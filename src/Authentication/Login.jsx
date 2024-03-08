@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import ModalCom from '../commonComp/ModalCom'
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -6,23 +7,37 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Registration from './Registration';
 import InputFieldErrorMsg from '../commonComp/InputFieldErrorMsg';
+import { userLoginCheck } from '../redux/actions';
+
+
 
 export default function Login(props) {
   const { handleFalseModal, openModal, openRegistration } = props;
-  const [loginInfo, handleLoginInfo] = useState({ userName: '', password: '' });
+  const [loginInfo, handleLoginInfo] = useState({ email: '', password: '' });
   const [validated, setValidated] = useState(false);
+  const dispatch = useDispatch();
+
+  const { profileInfo, profileInfoAction } = useSelector(state => state);
+
+  console.log(profileInfo, 'userLoginResponse')
+
+
+  useEffect(() => {
+    if(profileInfoAction?.loading === false && profileInfoAction?.success === true && profileInfo?.userLogin) {
+      handleFalseModal();
+    }
+  }, [profileInfoAction, handleFalseModal, profileInfo])
   
   const handleSubmit = (event) => {
-    console.log(loginInfo, 'hello')
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     } else {
       setValidated(true)
+      dispatch(userLoginCheck(loginInfo));
     }
   }
-  console.log(loginInfo, 'clg')
   return (
     <div>
       <ModalCom
@@ -45,8 +60,8 @@ export default function Login(props) {
           <Form.Control
             aria-label="Text input with checkbox"
             placeholder='Enter username or email...'
-            onChange={(e) => handleLoginInfo({ ...loginInfo, userName: e.target.value  })}
-            value={loginInfo?.userName}
+            onChange={(e) => handleLoginInfo({ ...loginInfo, email: e.target.value  })}
+            value={loginInfo?.email}
             type="email"
             required
           />
@@ -67,11 +82,11 @@ export default function Login(props) {
 
           />
           <InputFieldErrorMsg />
-
         </InputGroup>
+        <p style={{ color: 'red', marginBottom: '0px' }} >{!profileInfo?.userLogin && profileInfo?.message}</p>
         </Form>
         <Row style={{ paddingTop: '20px', position: 'relative' }}>
-          <Col sm={8} style={{ position: 'absolute', top:'3.5rem' }}>
+          <Col sm={8} style={{ position: 'absolute', top: '3.5rem' }}>
           <p> Don't have account {' '}
           <span style={{ color: 'blue', cursor: 'pointer' }}
             onClick={() => {
