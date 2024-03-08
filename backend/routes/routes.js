@@ -27,15 +27,20 @@ router.post('/user_login', async (req, res) => {
         // FIND USER IS PRESENT OR NOT IN DB;
         const userPresent = await userModel.findOne(query, {}, {});
         // CHECK USER PASSWORD CORRECT OR INCORRECT
+        if (!userPresent) {
+            res.status(200).json({ message: 'user not found with given email and password.', userLogin: false });
+            return;
+        }
         const userLogin = await validateUser(req.body?.password, userPresent.password);
         console.log(userLogin, 'kk');
         if (userLogin) {
             res.status(200).json({ message: 'user login successfull', userLogin: true })
         } else {
-            res.status(404).json({ message: 'user not found', userLogin: false })
+            res.status(200).json({ message: 'Password incorrect please check it.', userLogin: false })
         }
     } catch (error) {
-        
+        console.log(error, 'error')
+        res.status(400).json({ message: error.message, userLogin: false })
     }
 })
 
