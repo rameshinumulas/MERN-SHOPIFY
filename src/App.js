@@ -1,16 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 import Mainlayout from './Mainlayout';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
+import store from './middleware/store';
+import { Provider } from 'react-redux';
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
       <BrowserRouter>
         <Mainlayout />
       </BrowserRouter>
-    </div>
+    </Provider>
   );
 }
 
