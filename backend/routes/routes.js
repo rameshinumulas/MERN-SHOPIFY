@@ -9,12 +9,16 @@ router.post('/user_registration', async (req, res) => {
     let userBody = req.body;
     // ENCRYPT PASSWORD BY USING BCRYPT
     const newObj = await handleGetSalt(userBody);
-   
-    console.log(userBody, 'userBody', newObj);
     const saveUserData = new userModel(newObj);
+
     try {
+        const userCheck = await userModel.findOne({ email: userBody?.email }, {}, {})
+        if (userCheck) {
+            res.status(200).json({ data: {}, message: 'User already exists with same email id.', userRegistration: false })
+            return
+        }
         const resData = await saveUserData.save();
-        res.status(201).json(resData);
+        res.status(201).json({ data: resData, message: 'User registration successful !', userRegistration: true });
     } catch (error) {
         console.log(error)
         res.status(400).json({ message: error.message });

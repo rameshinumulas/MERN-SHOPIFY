@@ -4,7 +4,6 @@ export const middlewareThunk = (store) => (next) => async (action) => {
     const { dispatch } = store;
     // Call the next middleware in the chain or the reducer
     const result = next(action);
-
     // Check if payload is defined and is an object
     if (action.payload?.url) {
         try {

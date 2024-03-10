@@ -41,7 +41,6 @@ function TopBar() {
         openModal={openModal}
         openRegistration={() => setRegister(true)}
       />}
-      {console.log(registerModal, 'registerModal')}
       {registerModal && <Registration
         handleFalseModal={() => setRegister(false)}
         openModal={registerModal}
