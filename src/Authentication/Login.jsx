@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Registration from './Registration';
 import InputFieldErrorMsg from '../commonComp/InputFieldErrorMsg';
-import { userLoginCheck } from '../redux/actions';
+import { dataClearAction, userLoginCheck } from '../redux/actions';
 
 
 
@@ -19,8 +19,10 @@ export default function Login(props) {
 
   const { profileInfo, profileInfoAction } = useSelector(state => state);
 
-  console.log(profileInfo, 'userLoginResponse')
 
+  useEffect(() => {
+    dispatch(dataClearAction({ profileInfo: {} }));
+}, [openModal, dispatch])
 
   useEffect(() => {
     if(profileInfoAction?.loading === false && profileInfoAction?.success === true && profileInfo?.userLogin) {

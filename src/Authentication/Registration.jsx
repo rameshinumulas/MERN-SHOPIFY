@@ -1,32 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import ModalCom from '../commonComp/ModalCom'
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InputFieldErrorMsg from '../commonComp/InputFieldErrorMsg';
+import { dataClearAction, userRegistration } from '../redux/actions';
 export default function Registration(props) {
   const { handleFalseModal, openModal, openLogin } = props;
   const [registerData, handleRegister] = useState({});
   const [validated, setValidated] = useState(false);
-
+  const dispatch = useDispatch()
+  const { userCreationData, userCreationAction } = useSelector(state => state)
   const handleSubmit = (event) => {
-    console.log('regiterData', registerData)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     } else {
-      setValidated(true)
+      setValidated(true);
+      dispatch(userRegistration({ ...registerData, termsAndConditions: registerData?.termsAndConditions === 'on'}));
     }
-
   }
+
+  useEffect(() => {
+      dispatch(dataClearAction({ userCreationData: {} }));
+  }, [openModal, dispatch])
+
+  useEffect(() => {
+    if(!userCreationAction?.loading && userCreationAction?.success
+      && userCreationData?.userRegistration) {
+      handleFalseModal();
+    }
+  }, [userCreationAction, handleFalseModal, userCreationData])
+
   const handleAnswers = (inputType) => {
     handleRegister({
       ...registerData,
       [inputType.target.name]: inputType.target.value
     })
   }
-
   return (
     <div>
       <ModalCom
@@ -47,7 +60,7 @@ export default function Registration(props) {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasiclastName">
             <Form.Label>Last Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter Last Name" name="LastName"
+            <Form.Control type="text" placeholder="Enter Last Name" name="lastName"
               onChange={handleAnswers}
               required />
               <InputFieldErrorMsg />
@@ -79,7 +92,7 @@ export default function Registration(props) {
               required />
             <InputFieldErrorMsg />
           </Form.Group>
-        </Form>
+        <p style={{ color: 'red', marginBottom: '0px' }} >{!userCreationData?.userRegistration && userCreationData?.message}</p>        </Form>
         <Row style={{ paddingTop: '20px', position: 'relative' }}>
           <Col sm={8} style={{ position: 'absolute', top: '3.5rem' }}>
             <p> Go to
