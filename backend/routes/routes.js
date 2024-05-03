@@ -2,9 +2,19 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const userModel = require('../db/models/Model');
+const productCreateSchema = require('../db/models/ProductModel/ProductModel')
 const saltRounds = 10;
 
-
+router.post('/create/product', async (req, res) => {
+    try {
+        let productInfo = req.body;
+        await productCreateSchema.insertMany(productInfo);
+        res.status(200).json({ message: 'Successfully created....' })
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error })
+    }
+})
 router.post('/user_registration', async (req, res) => {
     let userBody = req.body;
     // ENCRYPT PASSWORD BY USING BCRYPT
