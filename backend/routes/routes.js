@@ -5,16 +5,6 @@ const userModel = require('../db/models/Model');
 const productCreateSchema = require('../db/models/ProductModel/ProductModel')
 const saltRounds = 10;
 
-router.post('/create/product', async (req, res) => {
-    try {
-        let productInfo = req.body;
-        await productCreateSchema.insertMany(productInfo);
-        res.status(200).json({ message: 'Successfully created....' })
-    } catch (error) {
-        console.log(error);
-        res.status(400).json({ message: error })
-    }
-})
 router.post('/user_registration', async (req, res) => {
     let userBody = req.body;
     // ENCRYPT PASSWORD BY USING BCRYPT
@@ -55,6 +45,27 @@ router.post('/user_login', async (req, res) => {
     } catch (error) {
         console.log(error, 'error')
         res.status(400).json({ message: error.message, userLogin: false })
+    }
+})
+
+router.post('/product/create', async (req, res) => {
+    try {
+        let productInfo = req.body;
+        await productCreateSchema.insertMany(productInfo);
+        res.status(200).json({ message: 'Successfully created....' })
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: error })
+    }
+})
+
+router.get('/product/get', async (req, res) => {
+    try {
+        let productList = await productCreateSchema.find({});
+        res.status(200).json({ data: productList, message: '' })
+    } catch (error) {
+        console.log(error, 'rr')
+        res.status(400).json({ data: error, message: '' })
     }
 })
 
