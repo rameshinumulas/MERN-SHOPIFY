@@ -1,7 +1,25 @@
 .set-height{
-    height: 25rem !important;
-    max-height: 25rem !important;
+    height: 27rem !important;
+    max-height: 27rem !important;
 }
 .global-family{
-    font-family:Georgia, 'Times New Roman', Times, serif !important;
+    font-family:Times New Roman !important;
+}
+.checked {
+    color: orange;
+}
+.unCheck{
+    color: #999393;
+}
+.text-uppercase{
+    text-transform: capitalize;
+}
+.heart-icon {
+    color: white;
+  }
+.set-img{
+    /* background-image: url('../Icons//heart-regular.svg'); */
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
