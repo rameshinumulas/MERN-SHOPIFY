@@ -1,4 +1,4 @@
-import { USER_LOGIN_CHECK, USER_CREATION } from './types';
+import { USER_LOGIN_CHECK, USER_CREATION, GET_PRODUCTS } from './types';
 
 export const userLoginCheck = (data) => ({
     type: 'BACKEND_API',
@@ -24,5 +24,14 @@ export const dataClearAction = (data) => ({
     type: 'USER_DATA_CLEAR_TYPE',
     payload: {
         ...data
+    }
+})
+
+export const getAllProducts = () => ({
+    type: 'BACKEND_API',
+    payload: {
+        url: '/product/get',
+        method: 'GET',
+        ...GET_PRODUCTS
     }
 })

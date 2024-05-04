@@ -7,3 +7,4 @@ const actionTypes = (type) => ({
 
 export const USER_LOGIN_CHECK = actionTypes('USER_LOGIN_CHECK');
 export const USER_CREATION = actionTypes('USER_CREATION');
+export const GET_PRODUCTS = actionTypes('GET_PRODUCTS');
