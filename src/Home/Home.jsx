@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import laptop from '../Icons/laptop-book.png'
 import './home.css';
-import ProductInfo from '../commonComp/ProductInfo';
+import { ProductInfo } from '../commonComp/ProductInfo';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProducts } from '../redux/actions';
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const { productList } = useSelector(state => state)
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch])
+  console.log(productList?.data, 'productList')
   return (
     <div>
       <div className="card bg-cardBg text-black p-4 fs-1">
@@ -22,7 +30,9 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <ProductInfo />
+        {productList?.data?.length > 0 && (
+          <ProductInfo productResults={productList?.data || []} />
+        )}
       </div>
     </div>
   )

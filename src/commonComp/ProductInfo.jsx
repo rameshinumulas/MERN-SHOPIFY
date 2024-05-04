@@ -1,21 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react';
+import './productCard.css';
 
-export default class ProductInfo extends Component {
-  render() {
-    return (
-      <div className='row'>
-        <div className='col-3'>
-          <div className='card'>
-            <img src="https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
-              alt='product-thumbnail' className='card-img-top'
-              width="100%" height="100%" />
+export const ProductInfo = (props) => {
+  const { productResults } = props;
+  console.log(productResults, 'resi')
+  return (
+    <div className='row p-4 global-family'>
+      <h1 className='fw-bold'> Trending Products</h1>
+      {productResults.map(eachProduct => (
+        <div className='col-3 py-4' key={eachProduct.id}>
+          <div className='card set-height'>
+            {/* <div className='border'> */}
+            <img src={eachProduct?.thumbnail}
+              alt='product-thumbnail' className='card-img-top border'
+              width="100%" height="100%"
+              style={{ objectFit:'cover' }}
+            />
+            {/* </div> */}
             <div className='card-body'>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-              <h4 className='card-title'>iPhone 9</h4>
+              <p class="card-text"><small class="text-muted">{eachProduct?.productCategory}</small></p>
+              <h4 className='card-title'>{eachProduct?.producTitle}</h4>
             </div>
           </div>
         </div>
-      </div>
-    )
-  }
+      ))}
+    </div>
+  )
 }
