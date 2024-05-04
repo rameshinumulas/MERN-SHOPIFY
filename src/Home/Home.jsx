@@ -1,21 +1,29 @@
 import React from 'react'
-import Card from 'react-bootstrap/Card';
-import webBg from '../Icons/webBg.jpg';
+import laptop from '../Icons/laptop-book.png'
+import './home.css';
+import ProductInfo from '../commonComp/ProductInfo';
 
 export default function Home() {
   return (
     <div>
-      <Card className="bg-grey text-white">
-      <Card.Img src={webBg} alt="Card image" />
-      <Card.ImgOverlay>
-        <Card.Title>Card title</Card.Title>
-        <Card.Text>
-          This is a wider card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </Card.Text>
-        <Card.Text>Last updated 3 mins ago</Card.Text>
-      </Card.ImgOverlay>
-    </Card>
+      <div className="card bg-cardBg text-black p-4 fs-1">
+        <div className='row'>
+          <div className='col-6 pt-5 pb-5'>
+            <h6 className='card-text fw-bold'>Starting At $9999</h6>
+            <h1 className='card-title fw-bolder'>
+              The best notebook collection 2024
+            </h1>
+            <h3 className='card-title fw-bolder'>Exclusive offer -10% off this week</h3>
+            <button className='btn btn-primary fw-bolder'>Show now</button>
+          </div>
+          <div className='col-6'>
+            <img alt='baclground'  variant="top" src={laptop} width='100%' height='100%' />
+          </div>
+        </div>
+      </div>
+      <div>
+        <ProductInfo />
+      </div>
     </div>
   )
 }
