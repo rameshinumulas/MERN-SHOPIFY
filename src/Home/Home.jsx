@@ -30,6 +30,7 @@ export default function Home() {
         </div>
       </div>
       <div>
+        <h1 className='fw-bold global-family' style={{ paddingTop: '20px', paddingLeft: '25px' }}> Trending Products</h1>
         {productList?.data?.length > 0 && (
           <ProductInfo productResults={productList?.data || []} />
         )}

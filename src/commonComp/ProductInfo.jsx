@@ -16,7 +16,6 @@ export const ProductInfo = (props) => {
   }
   return (
     <div className='row p-4 global-family'>
-      <h1 className='fw-bold'> Trending Products</h1>
       {productResults.map(eachProduct => (
         <div className='col-3 py-4' key={eachProduct.id}>
           <div className='card set-height'>
