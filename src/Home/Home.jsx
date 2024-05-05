@@ -11,7 +11,6 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch])
-  console.log(productList?.data, 'productList')
   return (
     <div>
       <div className="card bg-cardBg text-black p-4 fs-1">

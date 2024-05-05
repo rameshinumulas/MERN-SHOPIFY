@@ -3,7 +3,6 @@ import React from 'react'
 export default function RatingComp({ value }) {
     const stars = [];
     const ceilValue = Math.ceil(value);
-    console.log(ceilValue, 'vale')
     for (let i = 1; i <= 5; i++) {
         if (i <= value) {
             stars.push(<span class="fa fa-star checked" />);

@@ -7,11 +7,9 @@ import RatingComp from './RatingComp';
 
 export const ProductInfo = (props) => {
   const { productResults } = props;
-  console.log(productResults, 'resi')
   const getDiscountPrice = (listPrice, discount) => {
     let discountPrice = (discount/100) * listPrice;
     const totlaPrice = discountPrice + listPrice;
-    console.log(totlaPrice, 'totlaPrice')
     return totlaPrice;
   }
   return (
