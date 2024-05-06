@@ -6,17 +6,19 @@ import RatingComp from './RatingComp';
 // import filledHeart from '../Icons/heart-solid.svg'
 
 export const ProductInfo = (props) => {
-  const { productResults } = props;
+  const { productResults, cardThree } = props;
   const getDiscountPrice = (listPrice, discount) => {
     let discountPrice = (discount/100) * listPrice;
     const totlaPrice = discountPrice + listPrice;
     return totlaPrice;
   }
+  let colSetObj = 'col-lg-3 col-md-4 col-sm-2';
+  if (cardThree) colSetObj = 'col-lg-4 col-md-2 col-sm-1';
   return (
     <div className='row p-4 global-family'>
       {productResults.map(eachProduct => (
-        <div className='col-3 py-4' key={eachProduct.id}>
-          <div className='card set-height'>
+        <div className={colSetObj} key={eachProduct.id}>
+          <div className='card set-height set-width'>
             <div className='border'>
               <img src={eachProduct?.thumbnail}
                 alt='product-thumbnail' className='card-img-top border setFavImg'
