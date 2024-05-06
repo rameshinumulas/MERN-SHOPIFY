@@ -61,8 +61,14 @@ router.post('/product/create', async (req, res) => {
 
 router.get('/product/get', async (req, res) => {
   try {
-    let productList = await productCreateSchema.find({});
     let categoriesList = await productCreateSchema.distinct("productCategory");
+    let reqCategory = {};
+    if (req.query?.category) {
+      reqCategory = {
+        productCategory: req.query?.category
+      }
+    }
+    let productList = await productCreateSchema.find(reqCategory, {});
     res.status(200).json({ data: productList, message: '', categoriesList })
   } catch (error) {
     res.status(400).json({ data: error, message: '' })
