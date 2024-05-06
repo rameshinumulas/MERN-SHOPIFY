@@ -27,10 +27,10 @@ export const dataClearAction = (data) => ({
     }
 })
 
-export const getAllProducts = () => ({
+export const getAllProducts = (category) => ({
     type: 'BACKEND_API',
     payload: {
-        url: '/product/get',
+        url: `/product/get/?category=${category || ''}`,
         method: 'GET',
         ...GET_PRODUCTS
     }

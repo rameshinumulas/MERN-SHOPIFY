@@ -16,7 +16,7 @@ function TopBar() {
   return (
     <Navbar className="bg-primary">
       <Container className='me-0'>
-        <Navbar.Brand href="#home" className='text-white fw-bold fs-4'>Easy Shop In</Navbar.Brand>
+        <Navbar.Brand href="/" className='text-white fw-bold fs-4'>Easy Shop In</Navbar.Brand>
         <Navbar.Toggle />
         <InputGroup className="" style={{ width: '60%' }}>
           <Form.Control
