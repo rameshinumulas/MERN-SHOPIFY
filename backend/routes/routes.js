@@ -75,6 +75,16 @@ router.get('/product/get', async (req, res) => {
   }
 })
 
+router.get('/product/getInfo/:id', async (req, res) => {
+  let productId = req.params.id;
+  try {
+    const productInfo = await productCreateSchema.find({_id: productId}, {});
+    res.status(200).send({ data: productInfo?.[0], message: 'success'});
+  } catch (error) {
+    res.status(400).send({ data: error, message: 'success'});
+  }
+})
+
 const validateUser = async (userPassword, dbPassword) => {
   try {
     const salt = await bcrypt.compare(userPassword, dbPassword)
