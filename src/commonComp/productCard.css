@@ -23,3 +23,9 @@
     right: 10px;
     top: 10px;
 }
+.title_click:hover{
+    text-decoration: underline !important;
+}
+img:hover{
+    cursor: pointer !important;
+}

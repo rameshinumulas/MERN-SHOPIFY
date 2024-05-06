@@ -16,9 +16,9 @@ function TopBar() {
   return (
     <Navbar className="bg-primary">
       <Container className='me-0'>
-        <Navbar.Brand href="/" className='text-white fw-bold fs-4'>Easy Shop In</Navbar.Brand>
+        <Navbar.Brand href="/" className='text-white fw-bold fs-4'>Vizag Shopper's Hub</Navbar.Brand>
         <Navbar.Toggle />
-        <InputGroup className="" style={{ width: '60%' }}>
+        <InputGroup className="" style={{ width: '50%' }}>
           <Form.Control
             placeholder="Search product..."
             aria-label="Search product..."
