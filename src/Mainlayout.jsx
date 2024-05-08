@@ -6,14 +6,13 @@ import AllProducts from './Products/AllProducts';
 import ProductDetail from './Products/Details/ProductDetail';
 
 export default function Mainlayout(props) {
-  const { history } = props;
   return (
     <div>
-        <TopBar history={history} />
+        <TopBar/>
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/viewProducts' element={<AllProducts />}></Route>
-          <Route path='/product/:id/view' element={<ProductDetail />}> </Route>
+          <Route path='/product/:id/view' element={<ProductDetail />}></Route>
         </Routes>
     </div>
   )
