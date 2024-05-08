@@ -1,4 +1,4 @@
-import { USER_LOGIN_CHECK, USER_CREATION, GET_PRODUCTS } from './types';
+import { USER_LOGIN_CHECK, USER_CREATION, GET_PRODUCTS, GET_PRODUCT_BY_ID } from './types';
 
 export const userLoginCheck = (data) => ({
     type: 'BACKEND_API',
@@ -33,5 +33,14 @@ export const getAllProducts = (category) => ({
         url: `/product/get/?category=${category || ''}`,
         method: 'GET',
         ...GET_PRODUCTS
+    }
+})
+
+export const getProductById = id => ({
+    type: 'BACKEND_API',
+    payload: {
+        url: `/product/getInfo/${id}/`,
+        method: 'GET',
+        ...GET_PRODUCT_BY_ID
     }
 })

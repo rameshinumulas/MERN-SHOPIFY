@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, USER_CREATION, USER_LOGIN_CHECK } from './types';
+import { GET_PRODUCTS, GET_PRODUCT_BY_ID, USER_CREATION, USER_LOGIN_CHECK } from './types';
 
 const actionObjects = {
   loading: false,
@@ -10,7 +10,9 @@ const initialState = {
   profileInfo: {},
   profileInfoAction: actionObjects,
   userCreationAction: actionObjects,
-  userCreationData: {}
+  userCreationData: {},
+  getProductInfoAction: actionObjects,
+  productDetailsById: {}
 }
 
 const actionCreaters = (type) => ({
@@ -74,6 +76,25 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         getProductAction: actionCreaters('error')
+      }
+    
+    case GET_PRODUCT_BY_ID.pending:
+      return {
+        ...state,
+        getProductInfoAction: actionCreaters('pending')
+      }
+
+    case GET_PRODUCT_BY_ID.success:
+      return {
+        ...state,
+        getProductInfoAction: actionCreaters('success'),
+        productDetailsById: action.payload?.data
+      }
+
+    case GET_PRODUCT_BY_ID.error:
+      return {
+        ...state,
+        getProductInfoAction: actionCreaters('error')
       }
     case 'USER_DATA_CLEAR_TYPE':
       return {
