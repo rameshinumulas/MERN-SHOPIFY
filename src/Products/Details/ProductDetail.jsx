@@ -4,6 +4,7 @@ import { getProductById } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import RatingComp from '../../commonComp/RatingComp';
 import NumberFormatCom from '../../commonComp/NumberFormatCom';
+import { dateTimeFormatDisplay } from '../../commonComp/helpers';
 
 export default function ProductDetail(props) {
   // const { match: { params: { id } } } = props;
@@ -88,7 +89,13 @@ export default function ProductDetail(props) {
         <p className='h2'>Reviews</p>
         {productDetailsById?.reviews?.map(eachReview => (
           <>
-            <p className='fw-bold m-0'>{eachReview?.reviewerName} <span className='text-black-50 ps-4'>{eachReview?.date}</span></p>
+            <div style={{ display: 'flex' }}>
+              <p className='fw-bold m-0 w-40' >{eachReview?.reviewerName}
+              </p>
+              <span className='text-black-50 ps-4'>
+                {dateTimeFormatDisplay(eachReview?.date)}
+              </span>
+            </div>
             <RatingComp value={eachReview?.rating} />
             <p className='fw-normal'>{eachReview?.comment}</p>
           </>
