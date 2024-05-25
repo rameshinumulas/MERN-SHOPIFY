@@ -1,15 +1,16 @@
+const { type } = require('@testing-library/user-event/dist/type');
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-  producTitle: {
+  title: {
     required: true,
     type: String
   },
-  productDescription: {
+  description: {
     required: true,
     type: String
   },
-  productPrice: {
+  price: {
     required: true,
     type: Number
   },
@@ -17,15 +18,15 @@ const productSchema = new mongoose.Schema({
     required: true,
     type: Number
   },
-  productRating: {
+  rating: {
     required: true,
     type: Number
   },
-  productBrand: {
-    required: true,
+  brand: {
+    required: false,
     type: String
   },
-  productCategory: {
+  category: {
     required: true,
     type: String
   },
@@ -33,9 +34,41 @@ const productSchema = new mongoose.Schema({
     required: true,
     type: String
   },
-  productImages:{
+  images:{
     required: true,
     type: [String]
+  },
+  minimumOrderQuantity:{
+    required: true,
+    type: Number
+  },
+  returnPolicy: {
+    required: true,
+    type: String
+  },
+  warrantyInformation:{
+    required: false,
+    type: String
+  },
+  shippingInformation: {
+    required: false,
+    type: String
+  },
+  availabilityStatus: {
+    required: false,
+    type: String
+  },
+  meta: {
+    required: false,
+    type: {}
+  },
+  tags: {
+    required: false,
+    type: [String]
+  },
+  reviews: {
+    required: false,
+    type: [{}]
   },
   createdDate: { type: Date, default: Date.now },
 })

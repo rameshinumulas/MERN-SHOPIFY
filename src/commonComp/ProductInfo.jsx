@@ -31,28 +31,30 @@ export const ProductInfo = (props) => {
               <img src={heartIcon} alt="heart" width={"25px"} className='set-img' />
             </div>
             <div className='card-body px-3'>
-              <span class="card-text fw-bold"><small class="text-muted">{eachProduct?.productCategory}</small></span>
+              <span class="card-text fw-bold"><small class="text-muted">{eachProduct?.category}</small></span>
               <h5 className='card-title fw-bold title_click' role='button'
                 onClick={() => navigate(`/product/${eachProduct?._id}/view`)}
               >
-                {eachProduct?.producTitle.substring(0, 26)}
+                {eachProduct?.title?.substring(0, 26)}
               </h5>
-              <span>{eachProduct?.producTitle?.length > 26 ? '...' : ''}</span>
-              <RatingComp value={eachProduct?.productRating} />
+              <span>{eachProduct?.title?.length > 26 ? '...' : ''}</span>
+              <RatingComp value={eachProduct?.rating} />
               <div className='row'>
                 <div className='col'>
                   <NumberFormatCom
-                    value={eachProduct?.productPrice}
+                    value={eachProduct?.price}
                     prefix="$"
                     thousandSeparator={true}
                     displayType={'text'}
+                    isBold
                   />
                   <NumberFormatCom
-                    value={parseFloat(getDiscountPrice(eachProduct?.productPrice, eachProduct?.discountPercentage)).toFixed(0)}
+                    value={parseFloat(getDiscountPrice(eachProduct?.price, eachProduct?.discountPercentage)).toFixed(0)}
                     prefix="$"
                     thousandSeparator={true}
                     displayType={'text'}
                     strikeOut
+                    isBold
                   />
                   <NumberFormatCom
                     value={eachProduct?.discountPercentage}
@@ -60,6 +62,7 @@ export const ProductInfo = (props) => {
                     thousandSeparator={true}
                     displayType={'text'}
                     suffix='%'
+                    isBold
                   />
                 </div>
                 <div className='col'>
