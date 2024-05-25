@@ -90,7 +90,7 @@ export default function ProductDetail(props) {
         {productDetailsById?.reviews?.map(eachReview => (
           <>
             <div style={{ display: 'flex' }}>
-              <p className='fw-bold m-0 w-40' >{eachReview?.reviewerName}
+              <p className='fw-bold m-0' style={{ width: '40%' }} >{eachReview?.reviewerName}
               </p>
               <span className='text-black-50 ps-4'>
                 {dateTimeFormatDisplay(eachReview?.date)}
