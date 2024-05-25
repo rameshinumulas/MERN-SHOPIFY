@@ -66,6 +66,10 @@ const productSchema = new mongoose.Schema({
     required: false,
     type: [String]
   },
+  reviews: {
+    required: false,
+    type: [{}]
+  },
   createdDate: { type: Date, default: Date.now },
 })
 
