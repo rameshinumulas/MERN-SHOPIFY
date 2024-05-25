@@ -25,7 +25,7 @@ export default function ProductDetail(props) {
         <div id="carouselExampleDark" className="carousel carousel-dark slide w-"
           data-bs-ride="carousel" data-bs-interval="5000">
           <div className="carousel-inner">
-            {productDetailsById?.productImages?.map((eachCur, index) => (
+            {productDetailsById?.images?.map((eachCur, index) => (
               <div className={`carousel-item${index === 0 ? " active" : ""}`} key={index}>
                 <img src={eachCur} class="img-fluid d-block w-100 h-100" alt="..."></img>
               </div>
@@ -62,6 +62,7 @@ export default function ProductDetail(props) {
             thousandSeparator={true}
             displayType={'text'}
             suffix='%'
+            className='ps-2'
           />
         </div>
         <div className='row'>
@@ -70,8 +71,8 @@ export default function ProductDetail(props) {
             <p className='fw-bold m-0'>Category</p>
           </div>
           <div className='col-5'>
-            <p className='fw-normal m-0'>{productDetailsById?.brand}</p>
-            <p className='fw-normal m-0'>{productDetailsById?.category}</p>
+            <p className='fw-normal m-0'>{productDetailsById?.brand || '-'}</p>
+            <p className='fw-normal m-0'>{productDetailsById?.category || '-'}</p>
           </div>
         </div>
         <div className='row mt-3'>
@@ -82,13 +83,16 @@ export default function ProductDetail(props) {
             </p>
           </div>
         </div>
-        {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-            </div> */}
       </div>
       <div className='col-4'>
         <p className='h2'>Reviews</p>
+        {productDetailsById?.reviews?.map(eachReview => (
+          <>
+            <p className='fw-bold m-0'>{eachReview?.reviewerName} <span className='text-black-50 ps-4'>{eachReview?.date}</span></p>
+            <RatingComp value={eachReview?.rating} />
+            <p className='fw-normal'>{eachReview?.comment}</p>
+          </>
+        ))}
       </div>
     </div>
   )

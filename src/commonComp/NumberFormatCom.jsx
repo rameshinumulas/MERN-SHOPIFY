@@ -2,7 +2,9 @@ import React from 'react'
 import { NumericFormat } from 'react-number-format';
 
 export default function NumberFormatCom(props) {
-  const { prefix, value, displayType, thousandSeparator, suffix, strikeOut, isBold } = props;
+  const { prefix, value, displayType, thousandSeparator, suffix, strikeOut, isBold,
+    className
+   } = props;
   const TextDisplay = (textValue) => (
     <>
       {isBold ? (
@@ -15,9 +17,8 @@ export default function NumberFormatCom(props) {
       )}
     </>
   )
-  console.log(isBold, 'coming')
   return (
-    <div>
+    <div className={`${className}`}>
       <NumericFormat
         value={value}
         prefix={prefix}
