@@ -61,11 +61,11 @@ router.post('/product/create', async (req, res) => {
 
 router.get('/product/get', async (req, res) => {
   try {
-    let categoriesList = await productCreateSchema.distinct("productCategory");
+    let categoriesList = await productCreateSchema.distinct("category");
     let reqCategory = {};
     if (req.query?.category) {
       reqCategory = {
-        productCategory: req.query?.category
+        category: req.query?.category
       }
     }
     let productList = await productCreateSchema.find(reqCategory, {});
