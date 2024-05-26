@@ -35,9 +35,9 @@ export const ProductInfo = (props) => {
               <h5 className='card-title fw-bold title_click' role='button'
                 onClick={() => navigate(`/product/${eachProduct?._id}/view`)}
               >
-                {eachProduct?.title?.substring(0, 26)}
+                {eachProduct?.title?.substring(0, 22)}
+                <span>{eachProduct?.title?.length > 22 ? '...' : ''}</span>
               </h5>
-              <span>{eachProduct?.title?.length > 26 ? '...' : ''}</span>
               <RatingComp value={eachProduct?.rating} />
               <div className='row'>
                 <div className='col'>
