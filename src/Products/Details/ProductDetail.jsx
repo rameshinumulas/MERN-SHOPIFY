@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductById } from '../../redux/actions';
+import { getAllProducts, getProductById } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import RatingComp from '../../commonComp/RatingComp';
 import NumberFormatCom from '../../commonComp/NumberFormatCom';
 import { dateTimeFormatDisplay } from '../../commonComp/helpers';
+import { ProductInfo } from '../../commonComp/ProductInfo';
+import BackRouteCom from '../../commonComp/BackRouteCom';
 
 export default function ProductDetail(props) {
   // const { match: { params: { id } } } = props;
@@ -15,13 +17,21 @@ export default function ProductDetail(props) {
     return totlaPrice;
   }
   const dispatch = useDispatch();
-  const { productDetailsById } = useSelector(state => state);
+  const { productDetailsById, productList } = useSelector(state => state);
   console.log(productDetailsById, 'dd---');
   useEffect(() => {
     dispatch(getProductById(id));
   }, [])
+  useEffect(() => {
+    if (productDetailsById?.category) {
+      dispatch(getAllProducts(productDetailsById?.category))
+    }
+  }, [productDetailsById, dispatch])
   return (
     <div className='row p-3'>
+      <BackRouteCom
+        backRoute='/'
+      />
       <div className='col-4'>
         <div id="carouselExampleDark" className="carousel carousel-dark slide w-"
           data-bs-ride="carousel" data-bs-interval="5000">
@@ -83,6 +93,11 @@ export default function ProductDetail(props) {
               {productDetailsById?.description}
             </p>
           </div>
+          <div className='d-flex justify-content-between'>
+          <button className='btn btn-primary text-uppercase btn-sm'>Add to cart</button>
+          <button className='btn btn-warning text-uppercase btn-sm'>Buy now</button>
+          <button className='btn btn-danger text-uppercase btn-sm'>Add to wishlist</button>
+        </div>
         </div>
       </div>
       <div className='col-4'>
@@ -100,6 +115,13 @@ export default function ProductDetail(props) {
             <p className='fw-normal'>{eachReview?.comment}</p>
           </>
         ))}
+      </div>
+      <div className='border border-white-50' />
+      <div className='col'>
+        <p className='h2 pt-4 ps-4'>Similar Products</p>
+        <ProductInfo
+          productResults={productList?.data || []}
+        />
       </div>
     </div>
   )
