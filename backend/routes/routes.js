@@ -1,9 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const userModel = require('../db/models/Model');
 const productCreateSchema = require('../db/models/ProductModel/ProductModel')
 const saltRounds = 10;
+const secreteKeyForJWT = 'vizagshoperstop';
 
 router.post('/user_registration', async (req, res) => {
   let userBody = req.body;
@@ -18,7 +20,16 @@ router.post('/user_registration', async (req, res) => {
       return
     }
     const resData = await saveUserData.save();
-    res.status(201).json({ data: resData, message: 'User registration successful !', userRegistration: true });
+    let token;
+    token = jwt.sign(
+      {
+        userId: resData.id,
+        email: resData.email
+      },
+      secreteKeyForJWT,
+      { expiresIn: '4m' }
+    )
+    res.status(201).json({ data: resData, message: 'User registration successful !', userRegistration: true, token });
   } catch (error) {
     console.log(error)
     res.status(400).json({ message: error.message });
@@ -36,9 +47,18 @@ router.post('/user_login', async (req, res) => {
       return;
     }
     const userLogin = await validateUser(req.body?.password, userPresent.password);
+    let token;
+    token = jwt.sign(
+      {
+        userId: userPresent.id,
+        email: userPresent.email
+      },
+      secreteKeyForJWT,
+      { expiresIn: '4min' }
+      )
     console.log(userLogin, 'kk');
     if (userLogin) {
-      res.status(200).json({ message: 'user login successfull', userLogin: true })
+      res.status(200).json({ message: 'user login successfull', userLogin: true, token })
     } else {
       res.status(200).json({ message: 'Password incorrect please check it.', userLogin: false })
     }
@@ -63,13 +83,16 @@ router.get('/product/get', async (req, res) => {
   try {
     let categoriesList = await productCreateSchema.distinct("category");
     let reqCategory = {};
+    let token = req.headers.authorization.split(' ')[1]
+    const decodeToken = jwt.verify(token, secreteKeyForJWT);
+
     if (req.query?.category) {
       reqCategory = {
         category: req.query?.category
       }
     }
     let productList = await productCreateSchema.find(reqCategory, {});
-    res.status(200).json({ data: productList, message: '', categoriesList })
+    res.status(200).json({ data: productList, message: '', categoriesList, decodeToken })
   } catch (error) {
     res.status(400).json({ data: error, message: '' })
   }
