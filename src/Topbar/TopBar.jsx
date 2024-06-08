@@ -7,10 +7,13 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Login from '../Authentication/Login';
 import Registration from '../Authentication/Registration';
+import { useSelector } from 'react-redux';
+import Profile from '../UserInfo/Profile';
 
 
 function TopBar() {
   const navigate = useNavigate();
+  const { profileInfo } = useSelector(state => state)
   const [openModal, setModal] = useState(false)
   const [registerModal, setRegister] = useState(false)
   return (
@@ -33,12 +36,18 @@ function TopBar() {
         </div>
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            <Button type="submit" onClick={() => setModal(true)}>Login</Button>
+            {profileInfo?.userLogin ? (
+              <>
+                <Profile userDetails={profileInfo?.profile} />
+              </>
+            ) : (
+              <>
+                <Button type="submit" onClick={() => setModal(true)}>Login</Button>
+              </>
+            )}
           </Navbar.Text>
           <Navbar.Brand className='ms-3'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-            </svg>
+            <svg class="GAbRIN" width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path class="cziJ98" d="M15.32 2.405H4.887C3 2.405 2.46.805 2.46.805L2.257.21C2.208.085 2.083 0 1.946 0H.336C.1 0-.064.24.024.46l.644 1.945L3.11 9.767c.047.137.175.23.32.23h8.418l-.493 1.958H3.768l.002.003c-.017 0-.033-.003-.05-.003-1.06 0-1.92.86-1.92 1.92s.86 1.92 1.92 1.92c.99 0 1.805-.75 1.91-1.712l5.55.076c.12.922.91 1.636 1.867 1.636 1.04 0 1.885-.844 1.885-1.885 0-.866-.584-1.593-1.38-1.814l2.423-8.832c.12-.433-.206-.86-.655-.86" fill="#fff"></path></svg>
           </Navbar.Brand>
         </Navbar.Collapse>
       </Container>
