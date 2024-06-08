@@ -2,11 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts, getProductById } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
-import RatingComp from '../../commonComp/RatingComp';
-import NumberFormatCom from '../../commonComp/NumberFormatCom';
-import { dateTimeFormatDisplay } from '../../commonComp/helpers';
-import { ProductInfo } from '../../commonComp/ProductInfo';
-import BackRouteCom from '../../commonComp/BackRouteCom';
+import RatingComp from '../../commonComponents/RatingComponent';
+import NumberFormatCom from '../../commonComponents/NumberFormatComponent';
+import { dateTimeFormatDisplay } from '../../commonComponents/helpers';
+import { ProductInfo } from '../../commonComponents/ProductInfo';
+import BackRouteCom from '../../commonComponents/BackRouteComponent';
+import heartIcon from '../../Icons/heart-regular.svg'
+import '../../App.css'
 
 export default function ProductDetail(props) {
   // const { match: { params: { id } } } = props;
@@ -39,9 +41,15 @@ export default function ProductDetail(props) {
             {productDetailsById?.images?.map((eachCur, index) => (
               <div className={`carousel-item${index === 0 ? " active" : ""}`} key={index}>
                 <img src={eachCur} class="img-fluid d-block w-100 h-100" alt="..."></img>
+              <img src={heartIcon} alt="heart" width={"25px"} className='set-img' />
+
               </div>
             ))}
           </div>
+        </div>
+        <div className='d-grid custom-grid p-3'>
+          <button type='button' className='btn btn-lg text-uppercase addCartButton'>Add to cart</button>
+          <button type='button' className='btn btn-lg text-uppercase buynowButton'>Buy now</button>
         </div>
       </div>
       <div className='col-4'>
@@ -93,11 +101,6 @@ export default function ProductDetail(props) {
               {productDetailsById?.description}
             </p>
           </div>
-          <div className='d-flex justify-content-between p-3'>
-          <button className='btn btn-primary text-uppercase btn-sm'>Add to cart</button>
-          <button className='btn btn-warning text-uppercase btn-sm'>Buy now</button>
-          <button className='btn btn-danger text-uppercase btn-sm'>Add to wishlist</button>
-        </div>
         </div>
       </div>
       <div className='col-4'>
