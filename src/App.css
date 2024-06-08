@@ -3,3 +3,21 @@
     background-color: #0b5ed7 !important;
     border-color: #0b5ed7 !important;
 }
+
+.addCartButton {
+    background-color: #ff9f00 !important;
+    color: #fff !important;
+    border-radius: 3px !important;
+    font-weight: 600 !important;
+}
+.buynowButton {
+    background-color: #fb641b !important;
+    color: #fff !important;
+    border-radius: 3px !important;
+    font-weight: 600 !important;
+
+}
+.custom-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap:5px;
+}

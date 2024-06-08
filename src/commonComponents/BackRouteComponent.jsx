@@ -9,7 +9,7 @@ function BackRouteCom({ backText='Back', backRoute='/' }) {
     }
     return (
         <div role='button' onClick={handleClickBack}>
-            <p>{' < '} {backText}</p>
+            <b>{' < '} {backText}</b>
         </div>
     )
 }

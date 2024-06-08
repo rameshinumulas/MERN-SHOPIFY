@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import ModalCom from '../commonComp/ModalCom'
+import ModalCom from '../commonComponents/ModalCom'
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Registration from './Registration';
-import InputFieldErrorMsg from '../commonComp/InputFieldErrorMsg';
+import InputFieldErrorMsg from '../commonComponents/InputFieldErrorMsg';
 import { dataClearAction, userLoginCheck } from '../redux/actions';
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ProductInfo } from '../commonComp/ProductInfo';
+import { ProductInfo } from '../commonComponents/ProductInfo';
 import { getAllProducts } from '../redux/actions';
 
 export default function AllProducts() {

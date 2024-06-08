@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './productCard.css';
-import NumberFormatCom from './NumberFormatCom';
+import NumberFormatCom from './NumberFormatComponent';
 import heartIcon from '../Icons/heart-regular.svg'
-import RatingComp from './RatingComp';
+import RatingComp from './RatingComponent';
 // import filledHeart from '../Icons/heart-solid.svg'
 
 export const ProductInfo = (props) => {

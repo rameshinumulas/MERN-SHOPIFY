@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import laptop from '../Icons/laptop-book.png'
 import './home.css';
-import { ProductInfo } from '../commonComp/ProductInfo';
+import { ProductInfo } from '../commonComponents/ProductInfo';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '../redux/actions';
 

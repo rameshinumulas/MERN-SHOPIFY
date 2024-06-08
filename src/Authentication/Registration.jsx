@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import ModalCom from '../commonComp/ModalCom'
+import ModalCom from '../commonComponents/ModalCom'
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import InputFieldErrorMsg from '../commonComp/InputFieldErrorMsg';
+import InputFieldErrorMsg from '../commonComponents/InputFieldErrorMsg';
 import { dataClearAction, userRegistration } from '../redux/actions';
 export default function Registration(props) {
   const { handleFalseModal, openModal, openLogin } = props;
