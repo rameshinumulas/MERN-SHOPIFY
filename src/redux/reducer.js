@@ -29,6 +29,7 @@ export const reducer = (state = initialState, action) => {
         profileInfoAction: actionCreaters('pending')
       }
     case USER_LOGIN_CHECK.success:
+      localStorage.setItem('user_token', action.payload?.token)
       return {
         ...state,
         profileInfo: action.payload,

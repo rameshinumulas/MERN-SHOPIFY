@@ -93,7 +93,7 @@ export default function ProductDetail(props) {
               {productDetailsById?.description}
             </p>
           </div>
-          <div className='d-flex justify-content-between'>
+          <div className='d-flex justify-content-between p-3'>
           <button className='btn btn-primary text-uppercase btn-sm'>Add to cart</button>
           <button className='btn btn-warning text-uppercase btn-sm'>Buy now</button>
           <button className='btn btn-danger text-uppercase btn-sm'>Add to wishlist</button>
