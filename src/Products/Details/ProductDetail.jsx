@@ -7,7 +7,8 @@ import NumberFormatCom from '../../commonComponents/NumberFormatComponent';
 import { dateTimeFormatDisplay } from '../../commonComponents/helpers';
 import { ProductInfo } from '../../commonComponents/ProductInfo';
 import BackRouteCom from '../../commonComponents/BackRouteComponent';
-import heartIcon from '../../Icons/heart-regular.svg'
+import heartIcon from '../../Icons/heart-regular.svg';
+import heartFullIcon from '../../Icons/heart-full.svg';
 import '../../App.css'
 
 export default function ProductDetail(props) {
@@ -19,8 +20,9 @@ export default function ProductDetail(props) {
     return totlaPrice;
   }
   const dispatch = useDispatch();
-  const { productDetailsById, productList, profileInfo, actionSaveFavorite } = useSelector(state => state);
-  console.log(productDetailsById, 'dd---');
+  const { productDetailsById, productList, userDetails, actionSaveFavorite,
+    favoritesList, getProductInfoAction
+  } = useSelector(state => state);
 
   // GET PRODUCT DETAILS BY PRODUCT ID
   useEffect(() => {
@@ -31,38 +33,38 @@ export default function ProductDetail(props) {
   useEffect(() => {
     if (productDetailsById?.category) {
       dispatch(getAllProducts(productDetailsById?.category))
-    }
+    };
   }, [productDetailsById, dispatch]);
 
   const handleGetFavorites = useCallback(() => {
-    if (profileInfo?.profile?._id) {
-      dispatch(actionGetAllFavorites(profileInfo?.profile?._id, productDetailsById?._id))
-    }
+    if (userDetails?._id) {
+      dispatch(actionGetAllFavorites(userDetails?._id, id))
+    };
   }, [])
 
   useEffect(() => {
-    if (profileInfo?.profile?._id) {
+    if (userDetails?._id && getProductInfoAction?.loading === false && getProductInfoAction?.success === true) {
       handleGetFavorites();
     }
-  }, [profileInfo, handleGetFavorites]);
-  
+  }, [userDetails, handleGetFavorites, getProductInfoAction]);
+
   // GET ALL FAVORITES BY USER ID
   useEffect(() => {
-    if(actionSaveFavorite?.loading === false && actionSaveFavorite?.success === true) {
+    if (actionSaveFavorite?.loading === false && actionSaveFavorite?.success === true) {
       handleGetFavorites();
     }
   }, [actionSaveFavorite, dispatch, handleGetFavorites]);
 
   // ADD FAVORITE
   const handleMyfavorites = () => {
-    if (profileInfo?.profile?._id) {
+    if (userDetails?._id) {
       const favPayload = {
         productId: productDetailsById?._id,
-        userId: profileInfo?.profile?._id
+        userId: userDetails?._id
       };
       dispatch(addUserFavorite(favPayload));
-    }
-  }
+    };
+  };
 
   return (
     <div className='row p-3'>
@@ -76,7 +78,13 @@ export default function ProductDetail(props) {
             {productDetailsById?.images?.map((eachCur, index) => (
               <div className={`carousel-item${index === 0 ? " active" : ""}`} key={index}>
                 <img src={eachCur} class="img-fluid d-block w-100 h-100" alt="..."></img>
-                <img src={heartIcon} alt="heart" width={"25px"} className='set-img' onClick={handleMyfavorites} />
+                {favoritesList?.[0]?.productId === productDetailsById?._id
+                  ? (
+                    <img src={heartFullIcon} alt="heart" width={"25px"} className='set-img' onClick={handleMyfavorites} />
+                  )
+                  : (
+                    <img src={heartIcon} alt="heart" width={"25px"} className='set-img' onClick={handleMyfavorites} />
+                  )}
               </div>
             ))}
           </div>

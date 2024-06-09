@@ -1,4 +1,4 @@
-import { USER_LOGIN_CHECK, USER_CREATION, GET_PRODUCTS, GET_PRODUCT_BY_ID, ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE } from './types';
+import { USER_LOGIN_CHECK, USER_CREATION, GET_PRODUCTS, GET_PRODUCT_BY_ID, ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE, GET_USER_DETAILS } from './types';
 
 export const userLoginCheck = (data) => ({
     type: 'BACKEND_API',
@@ -61,5 +61,14 @@ export const actionGetAllFavorites = (id, productId) => ({
         url: `/product/getFavoritesByuser/${id}?productId=${productId}`,
         method: 'GET',
         ...GET_ALL_USER_FAVORITE
+    }
+});
+
+export const getProfileInfo = () => ({
+    type: 'BACKEND_API',
+    payload: {
+        url: '/user/profile',
+        method: 'GET',
+        ...GET_USER_DETAILS
     }
 })

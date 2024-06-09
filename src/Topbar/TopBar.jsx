@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -7,15 +7,21 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Login from '../Authentication/Login';
 import Registration from '../Authentication/Registration';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Profile from '../UserInfo/Profile';
+import { getProfileInfo } from '../redux/actions';
 
 
 function TopBar() {
   const navigate = useNavigate();
-  const { profileInfo } = useSelector(state => state)
-  const [openModal, setModal] = useState(false)
-  const [registerModal, setRegister] = useState(false)
+  const dispatch = useDispatch();
+  const { userDetails } = useSelector(state => state);
+  const [openModal, setModal] = useState(false);
+  const [registerModal, setRegister] = useState(false);
+
+  useEffect(() => {
+    dispatch(getProfileInfo())
+  }, [])
   return (
     <Navbar className="bg-primary">
       <Container className='me-0'>
@@ -36,9 +42,9 @@ function TopBar() {
         </div>
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            {profileInfo?.userLogin ? (
+            {userDetails?._id ? (
               <>
-                <Profile userDetails={profileInfo?.profile} />
+                <Profile userDetails={userDetails} />
               </>
             ) : (
               <>

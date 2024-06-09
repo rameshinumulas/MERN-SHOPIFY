@@ -1,4 +1,4 @@
-import { ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE, GET_PRODUCTS, GET_PRODUCT_BY_ID, USER_CREATION, USER_LOGIN_CHECK } from './types';
+import { ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE, GET_PRODUCTS, GET_PRODUCT_BY_ID, GET_USER_DETAILS, USER_CREATION, USER_LOGIN_CHECK } from './types';
 
 const actionObjects = {
   loading: false,
@@ -135,6 +135,23 @@ export const reducer = (state = initialState, action) => {
     return {
       ...state,
       actionGetAllFavorites: actionCreaters('error')
+    }
+
+    case GET_USER_DETAILS.pending: 
+    return {
+      ...state,
+      actionGetUserProfile: actionCreaters('pending')
+    }
+    case GET_USER_DETAILS.success: 
+    return {
+      ...state,
+      userDetails: action.payload?.data,
+      actionGetUserProfile: actionCreaters('success')
+    }
+    case GET_USER_DETAILS.error: 
+    return {
+      ...state,
+      actionGetUserProfile: actionCreaters('error')
     }
   
     default:
