@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const userModel = require('../db/models/Model');
+const userFavoritesSchema = require('../db/models/favoritesModel/favoritesModel')
 const productCreateSchema = require('../db/models/ProductModel/ProductModel')
 const saltRounds = 10;
 const secreteKeyForJWT = 'vizagshoperstop';
@@ -43,7 +44,7 @@ router.post('/user_login', async (req, res) => {
     const userPresent = await userModel.findOne(query, {}, {});
     // CHECK USER PASSWORD CORRECT OR INCORRECT
     if (!userPresent) {
-      res.status(200).json({ message: 'user not found with given email and password.', userLogin: false });
+      res.status(200).json({ message: 'User not found with given email and password.', userLogin: false });
       return;
     }
     const userLogin = await validateUser(req.body?.password, userPresent.password);
@@ -54,11 +55,10 @@ router.post('/user_login', async (req, res) => {
         email: userPresent.email
       },
       secreteKeyForJWT,
-      { expiresIn: '4min' }
-      )
-    console.log(userLogin, 'kk');
+      { expiresIn: '1h' }
+    )
     if (userLogin) {
-      res.status(200).json({ message: 'user login successfull', userLogin: true, token })
+      res.status(200).json({ message: 'User login successfull', userLogin: true, token, profile: userPresent })
     } else {
       res.status(200).json({ message: 'Password incorrect please check it.', userLogin: false })
     }
@@ -84,7 +84,8 @@ router.get('/product/get', async (req, res) => {
     let categoriesList = await productCreateSchema.distinct("category");
     let reqCategory = {};
     let token = req.headers.authorization.split(' ')[1]
-    const decodeToken = jwt.verify(token, secreteKeyForJWT);
+    const decodeToken = token;
+    //  jwt.verify(token, secreteKeyForJWT);
 
     if (req.query?.category) {
       reqCategory = {
@@ -101,12 +102,41 @@ router.get('/product/get', async (req, res) => {
 router.get('/product/getInfo/:id', async (req, res) => {
   let productId = req.params.id;
   try {
-    const productInfo = await productCreateSchema.find({_id: productId}, {});
-    res.status(200).send({ data: productInfo?.[0], message: 'success'});
+    const productInfo = await productCreateSchema.find({ _id: productId }, {});
+    res.status(200).send({ data: productInfo?.[0], message: 'success' });
   } catch (error) {
-    res.status(400).send({ data: error, message: 'success'});
+    res.status(400).send({ data: error, message: 'success' });
   }
 })
+
+router.post('/product/addUserFavorites', async (req, res) => {
+  try {
+    const favoriteBody = req.body;
+    const saveFavorite = new userFavoritesSchema(favoriteBody);
+    const myFavorites = await saveFavorite.save();
+    let token = req.headers.authorization.split(' ')[1];
+    //DECODE TOKEN
+    const decodeToken = jwt.verify(token, secreteKeyForJWT);
+    res.status(201).json({ data: myFavorites, message: 'Successfully added your favorite', decodeToken });
+  } catch (error) {
+    res.status(400).json({ data: error });
+  }
+});
+
+router.get('/product/getFavoritesByuser/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log(req.query, 'eeee')
+    const token = req.headers.authorization.split(' ')[1];
+    jwt.verify(token, secreteKeyForJWT);
+    console.log(token, userId)
+    const allFavorites = await userFavoritesSchema.find({ userId, productId: req.query.productId }, {});
+    console.log(allFavorites, 'jjjj');
+    res.status(200).json({ data: allFavorites, message: 'Successfully fetched data' });
+  } catch (error) {
+    res.status(400).json({ data: error })
+  }
+});
 
 const validateUser = async (userPassword, dbPassword) => {
   try {
