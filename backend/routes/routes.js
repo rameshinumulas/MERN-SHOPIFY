@@ -79,6 +79,18 @@ router.post('/product/create', async (req, res) => {
   }
 })
 
+router.get('/user/profile', async (req, res) => {
+  let token = req.headers.authorization.split(' ')[1]
+  try {
+    const decodeToken = jwt.verify(token, secreteKeyForJWT);
+    const userDetails = await userModel.findOne({ _id: decodeToken.userId }, {});
+    res.status(200).json({ data: userDetails, message: 'Successfully fetched user details' });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ data: error })
+  }
+})
+
 router.get('/product/get', async (req, res) => {
   try {
     let categoriesList = await productCreateSchema.distinct("category");
