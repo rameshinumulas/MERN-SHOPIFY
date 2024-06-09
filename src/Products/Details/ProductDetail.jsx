@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts, getProductById } from '../../redux/actions';
+import { actionGetAllFavorites, addUserFavorite, getAllProducts, getProductById } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import RatingComp from '../../commonComponents/RatingComponent';
 import NumberFormatCom from '../../commonComponents/NumberFormatComponent';
@@ -19,16 +19,51 @@ export default function ProductDetail(props) {
     return totlaPrice;
   }
   const dispatch = useDispatch();
-  const { productDetailsById, productList } = useSelector(state => state);
+  const { productDetailsById, productList, profileInfo, actionSaveFavorite } = useSelector(state => state);
   console.log(productDetailsById, 'dd---');
+
+  // GET PRODUCT DETAILS BY PRODUCT ID
   useEffect(() => {
     dispatch(getProductById(id));
   }, [])
+
+  // GET ALL PRODUCTS BY CATEGORY
   useEffect(() => {
     if (productDetailsById?.category) {
       dispatch(getAllProducts(productDetailsById?.category))
     }
-  }, [productDetailsById, dispatch])
+  }, [productDetailsById, dispatch]);
+
+  const handleGetFavorites = useCallback(() => {
+    if (profileInfo?.profile?._id) {
+      dispatch(actionGetAllFavorites(profileInfo?.profile?._id, productDetailsById?._id))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (profileInfo?.profile?._id) {
+      handleGetFavorites();
+    }
+  }, [profileInfo, handleGetFavorites]);
+  
+  // GET ALL FAVORITES BY USER ID
+  useEffect(() => {
+    if(actionSaveFavorite?.loading === false && actionSaveFavorite?.success === true) {
+      handleGetFavorites();
+    }
+  }, [actionSaveFavorite, dispatch, handleGetFavorites]);
+
+  // ADD FAVORITE
+  const handleMyfavorites = () => {
+    if (profileInfo?.profile?._id) {
+      const favPayload = {
+        productId: productDetailsById?._id,
+        userId: profileInfo?.profile?._id
+      };
+      dispatch(addUserFavorite(favPayload));
+    }
+  }
+
   return (
     <div className='row p-3'>
       <BackRouteCom
@@ -41,8 +76,7 @@ export default function ProductDetail(props) {
             {productDetailsById?.images?.map((eachCur, index) => (
               <div className={`carousel-item${index === 0 ? " active" : ""}`} key={index}>
                 <img src={eachCur} class="img-fluid d-block w-100 h-100" alt="..."></img>
-              <img src={heartIcon} alt="heart" width={"25px"} className='set-img' />
-
+                <img src={heartIcon} alt="heart" width={"25px"} className='set-img' onClick={handleMyfavorites} />
               </div>
             ))}
           </div>
