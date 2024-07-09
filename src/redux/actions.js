@@ -1,4 +1,4 @@
-import { USER_LOGIN_CHECK, USER_CREATION, GET_PRODUCTS, GET_PRODUCT_BY_ID, ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE, GET_USER_DETAILS } from './types';
+import { USER_LOGIN_CHECK, USER_CREATION, GET_PRODUCTS, GET_PRODUCT_BY_ID, ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE, GET_USER_DETAILS, ADD_CART_ITEM } from './types';
 
 export const userLoginCheck = (data) => ({
     type: 'BACKEND_API',
@@ -72,3 +72,13 @@ export const getProfileInfo = () => ({
         ...GET_USER_DETAILS
     }
 })
+
+export const addItemToCart = data => ({
+    type: 'BACKEND_API',
+    payload: {
+        url: '/product/addToCart/',
+        method: 'POST',
+        data,
+        ...ADD_CART_ITEM
+    }
+});

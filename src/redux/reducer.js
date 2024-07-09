@@ -1,4 +1,4 @@
-import { ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE, GET_PRODUCTS, GET_PRODUCT_BY_ID, GET_USER_DETAILS, USER_CREATION, USER_LOGIN_CHECK } from './types';
+import { ADD_CART_ITEM, ADD_USER_FAVORITE, GET_ALL_USER_FAVORITE, GET_PRODUCTS, GET_PRODUCT_BY_ID, GET_USER_DETAILS, USER_CREATION, USER_LOGIN_CHECK } from './types';
 
 const actionObjects = {
   loading: false,
@@ -149,6 +149,23 @@ export const reducer = (state = initialState, action) => {
       actionGetUserProfile: actionCreaters('success')
     }
     case GET_USER_DETAILS.error: 
+    return {
+      ...state,
+      actionGetUserProfile: actionCreaters('error')
+    }
+
+    case ADD_CART_ITEM.pending: 
+    return {
+      ...state,
+      actionGetUserProfile: actionCreaters('pending')
+    }
+    case ADD_CART_ITEM.success: 
+    return {
+      ...state,
+      userDetails: action.payload?.data,
+      actionGetUserProfile: actionCreaters('success')
+    }
+    case ADD_CART_ITEM.error: 
     return {
       ...state,
       actionGetUserProfile: actionCreaters('error')
