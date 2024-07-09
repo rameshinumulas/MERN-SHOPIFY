@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionGetAllFavorites, addUserFavorite, getAllProducts, getProductById } from '../../redux/actions';
+import { actionGetAllFavorites, addItemToCart, addUserFavorite, getAllProducts, getProductById } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import RatingComp from '../../commonComponents/RatingComponent';
 import NumberFormatCom from '../../commonComponents/NumberFormatComponent';
@@ -66,6 +66,25 @@ export default function ProductDetail(props) {
     };
   };
 
+  // ADD ITEM INTO CART
+  const handleItem = () => {
+    let cartItem = {
+      cartItemId: productDetailsById._id,
+      title: productDetailsById.title,
+      price: productDetailsById.price,
+      discountPercentage: productDetailsById.discountPercentage,
+      brand: productDetailsById.brand,
+      category: productDetailsById.category,
+      thumbnail: productDetailsById.thumbnail,
+      minimumOrderQuantity: productDetailsById.minimumOrderQuantity,
+      returnPolicy: productDetailsById.returnPolicy,
+      warrantyInformation: productDetailsById.warrantyInformation,
+      shippingInformation: productDetailsById.shippingInformation,
+      availabilityStatus: productDetailsById.availabilityStatus
+    }
+    dispatch(addItemToCart(cartItem));
+  }
+
   return (
     <div className='row p-3'>
       <BackRouteCom
@@ -90,7 +109,9 @@ export default function ProductDetail(props) {
           </div>
         </div>
         <div className='d-grid custom-grid p-3'>
-          <button type='button' className='btn btn-lg text-uppercase addCartButton'>Add to cart</button>
+          <button type='button' className='btn btn-lg text-uppercase addCartButton'
+            onClick={() => handleItem()}
+          >Add to cart</button>
           <button type='button' className='btn btn-lg text-uppercase buynowButton'>Buy now</button>
         </div>
       </div>
