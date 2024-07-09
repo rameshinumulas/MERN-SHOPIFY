@@ -3,8 +3,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const userModel = require('../db/models/Model');
-const userFavoritesSchema = require('../db/models/favoritesModel/favoritesModel')
-const productCreateSchema = require('../db/models/ProductModel/ProductModel')
+const userFavoritesSchema = require('../db/models/favoritesModel/favoritesModel');
+const productCreateSchema = require('../db/models/ProductModel/ProductModel');
+const addItemToCart = require('../db/models/orderRelated/addCartModel');
 const saltRounds = 10;
 const secreteKeyForJWT = 'vizagshoperstop';
 
@@ -149,6 +150,17 @@ router.get('/product/getFavoritesByuser/:id', async (req, res) => {
     res.status(400).json({ data: error })
   }
 });
+
+router.post('/product/addToCart', async (req, res) => {
+  console.log(req.body)
+  try {
+    const saveCartItem = addItemToCart(req.body);
+    const resItemData = saveCartItem.save();
+    res.status(201).json({ message: 'Added to cart', data: resItemData })
+  } catch(error) {
+    res.status(400).json({ message: error })
+  }
+})
 
 const validateUser = async (userPassword, dbPassword) => {
   try {
