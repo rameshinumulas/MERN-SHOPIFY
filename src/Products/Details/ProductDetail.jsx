@@ -21,7 +21,7 @@ export default function ProductDetail(props) {
   }
   const dispatch = useDispatch();
   const { productDetailsById, productList, userDetails, actionSaveFavorite,
-    favoritesList, getProductInfoAction
+    favoritesList
   } = useSelector(state => state);
 
   // GET PRODUCT DETAILS BY PRODUCT ID
@@ -43,10 +43,10 @@ export default function ProductDetail(props) {
   }, [])
 
   useEffect(() => {
-    if (userDetails?._id && getProductInfoAction?.loading === false && getProductInfoAction?.success === true) {
+    if (userDetails?._id && id) {
       handleGetFavorites();
     }
-  }, [userDetails, handleGetFavorites, getProductInfoAction]);
+  }, [userDetails, handleGetFavorites, id]);
 
   // GET ALL FAVORITES BY USER ID
   useEffect(() => {
